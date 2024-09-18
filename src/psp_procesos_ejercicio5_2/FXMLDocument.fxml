@@ -6,9 +6,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="psp_procesos_ejercicio5_2.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="500" prefWidth="500" xmlns:fx="http://javafx.com/fxml/1" fx:controller="psp_procesos_ejercicio5_2.FXMLDocumentController">
     <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
+         <Button fx:id="openCalcButton" text="Abrir Calculadora" 
+                AnchorPane.leftAnchor="50" AnchorPane.topAnchor="200" 
+                onAction="#handleOpenCalc"/>
+        <Button fx:id="closeCalcButton" text="Cerrar Calculadora" 
+                AnchorPane.leftAnchor="200" AnchorPane.topAnchor="200" 
+                onAction="#handleCloseCalc"/>
     </children>
 </AnchorPane>
