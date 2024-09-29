@@ -62,12 +62,17 @@ public class FXMLDocumentController {
                 ProcessBuilder builder = new ProcessBuilder("java", "-cp", classpath, "otroPrograma.OtroPrograma");
                 otroProgramaProcess = builder.start(); // Inicia el proceso
 
-                // Opcional: Leer la salida del programa
-                BufferedReader reader = new BufferedReader(new InputStreamReader(otroProgramaProcess.getInputStream()));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line);  // Muestra la salida del comando
-                }
+                // Ejecuta la lectura de la salida en un hilo separado
+                new Thread(() -> {
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(otroProgramaProcess.getInputStream()))) {
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);  // Muestra la salida del comando
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             } else {
                 System.out.println("OtroPrograma ya está en ejecución.");
             }
