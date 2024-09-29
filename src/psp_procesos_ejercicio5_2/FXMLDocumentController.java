@@ -27,9 +27,11 @@ public class FXMLDocumentController {
     // Método para abrir la calculadora
     @FXML
     private void handleOpenCalc(ActionEvent event) throws IOException {
-        if (calculatorProcess == null || !calculatorProcess.isAlive()) {
+        if (!isCalculatorRunning()) {
             ProcessBuilder builder = new ProcessBuilder("calc.exe");
             calculatorProcess = builder.start();
+        } else {
+            System.out.println("La calculadora ya está en ejecución.");
         }
     }
 
@@ -37,17 +39,41 @@ public class FXMLDocumentController {
     @FXML
     private void handleCloseCalc(ActionEvent event) {
         try {
-            ProcessBuilder builder = new ProcessBuilder("taskkill", "/IM", "CalculatorApp.exe", "/F");
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);  // Muestra la salida del comando
+            if (isCalculatorRunning()) {
+                ProcessBuilder builder = new ProcessBuilder("taskkill", "/F", "/IM", "CalculatorApp.exe");
+                builder.redirectErrorStream(true);
+                Process process = builder.start();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);  // Muestra la salida del comando
+                }
+                calculatorProcess = null; // Reinicia el manejador del proceso
+                System.out.println("La calculadora ha sido cerrada.");
+            } else {
+                System.out.println("La calculadora no está en ejecución.");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Método para verificar si la calculadora está en ejecución
+    private boolean isCalculatorRunning() {
+        try {
+            ProcessBuilder builder = new ProcessBuilder("tasklist");
+            Process process = builder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("CalculatorApp.exe")) {  // Verifica si el proceso está en la lista
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // Método para abrir OtroPrograma
@@ -86,10 +112,10 @@ public class FXMLDocumentController {
     private void handleCloseOtroPrograma(ActionEvent event) {
         if (otroProgramaProcess != null && otroProgramaProcess.isAlive()) {
             otroProgramaProcess.destroy();  // Cierra el proceso
+            otroProgramaProcess = null; // Reinicia el manejador del proceso
             System.out.println("OtroPrograma cerrado.");
         } else {
             System.out.println("OtroPrograma no está en ejecución.");
         }
     }
-
 }

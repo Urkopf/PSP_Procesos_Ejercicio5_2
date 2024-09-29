@@ -10,15 +10,13 @@ import javafx.stage.Stage;
 
 public class FXMLDocumentController {
 
-    
-
     @FXML
     private Button closeButton;
-
 
     @FXML
     private void handleClose(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
+        System.out.println("OtroPrograma cerrado desde OtroPrograma.");
         stage.close();
     }
 
