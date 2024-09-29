@@ -6,14 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
-
 public class OtroPrograma extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        primaryStage.setTitle("Calculator Control");
+        primaryStage.setTitle("Otro programa");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

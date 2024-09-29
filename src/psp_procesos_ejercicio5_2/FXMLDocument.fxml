@@ -7,7 +7,7 @@
     <children>
          <Button fx:id="openCalcButton" onAction="#handleOpenCalc" text="Abrir Calculadora" AnchorPane.leftAnchor="50" AnchorPane.topAnchor="200" />
         <Button fx:id="closeCalcButton" onAction="#handleCloseCalc" text="Cerrar Calculadora" AnchorPane.leftAnchor="200" AnchorPane.topAnchor="200" />
-      <Button fx:id="openOtroProgramaButton" layoutX="50.0" layoutY="310.0" onAction="#handleOpenCalc" text="Abrir otroPrograma" />
-      <Button fx:id="closeOtroProgramaButton" layoutX="200.0" layoutY="310.0" onAction="#handleCloseCalc" text="Cerrar otroPrograma" />
+      <Button fx:id="openOtroProgramaButton" layoutX="50.0" layoutY="310.0" onAction="#handleOpenOtroPrograma" text="Abrir otroPrograma" />
+      <Button fx:id="closeOtroProgramaButton" layoutX="200.0" layoutY="310.0" onAction="#handleCloseOtroPrograma" text="Cerrar otroPrograma" />
     </children>
 </AnchorPane>

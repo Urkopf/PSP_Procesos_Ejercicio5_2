@@ -15,21 +15,28 @@ public class FXMLDocumentController {
     @FXML
     private Button closeCalcButton;
 
-    private Process calculatorProcess;
+    @FXML
+    private Button openOtroProgramaButton;
 
     @FXML
+    private Button closeOtroProgramaButton;
+
+    private Process calculatorProcess;
+    private Process otroProgramaProcess;  // Para el otro programa
+
+    // Método para abrir la calculadora
+    @FXML
     private void handleOpenCalc(ActionEvent event) throws IOException {
-        // Iniciar la calculadora
         if (calculatorProcess == null || !calculatorProcess.isAlive()) {
             ProcessBuilder builder = new ProcessBuilder("calc.exe");
             calculatorProcess = builder.start();
         }
     }
 
+    // Método para cerrar la calculadora
     @FXML
     private void handleCloseCalc(ActionEvent event) {
         try {
-            // Usa el nombre del proceso en lugar del PID
             ProcessBuilder builder = new ProcessBuilder("taskkill", "/IM", "CalculatorApp.exe", "/F");
             builder.redirectErrorStream(true);
             Process process = builder.start();
@@ -43,19 +50,41 @@ public class FXMLDocumentController {
         }
     }
 
+    // Método para abrir OtroPrograma
+    @FXML
+    private void handleOpenOtroPrograma(ActionEvent event) {
+        try {
+            if (otroProgramaProcess == null || !otroProgramaProcess.isAlive()) {
+                // Cambia "build/classes" a la carpeta donde están tus archivos .class compilados
+                String classpath = "build/classes";
 
-    private String getCalculatorPID() throws IOException {
-        ProcessBuilder builder = new ProcessBuilder("tasklist", "/FI", "IMAGENAME eq calc.exe", "/FO", "CSV");
-        builder.redirectErrorStream(true);
-        Process process = builder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (line.contains("calc.exe")) {
-                String[] parts = line.split(",");
-                return parts[1].replaceAll("\"", "");  // Extraer el PID
+                // Usa ProcessBuilder para iniciar el otro programa
+                ProcessBuilder builder = new ProcessBuilder("java", "-cp", classpath, "otroPrograma.OtroPrograma");
+                otroProgramaProcess = builder.start(); // Inicia el proceso
+
+                // Opcional: Leer la salida del programa
+                BufferedReader reader = new BufferedReader(new InputStreamReader(otroProgramaProcess.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);  // Muestra la salida del comando
+                }
+            } else {
+                System.out.println("OtroPrograma ya está en ejecución.");
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return null;  // No se encontró el PID
     }
+
+    // Método para cerrar OtroPrograma
+    @FXML
+    private void handleCloseOtroPrograma(ActionEvent event) {
+        if (otroProgramaProcess != null && otroProgramaProcess.isAlive()) {
+            otroProgramaProcess.destroy();  // Cierra el proceso
+            System.out.println("OtroPrograma cerrado.");
+        } else {
+            System.out.println("OtroPrograma no está en ejecución.");
+        }
+    }
+
 }
