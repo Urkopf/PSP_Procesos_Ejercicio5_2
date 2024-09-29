@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500" prefWidth="500" xmlns:fx="http://javafx.com/fxml/1" fx:controller="otroPrograma.FXMLDocumentController">
+    <children>
+         <Button fx:id="openCalcButton" text="Abrir Calculadora" 
+                AnchorPane.leftAnchor="50" AnchorPane.topAnchor="200" 
+                onAction="#handleOpenCalc"/>
+        <Button fx:id="closeCalcButton" text="Cerrar Calculadora" 
+                AnchorPane.leftAnchor="200" AnchorPane.topAnchor="200" 
+                onAction="#handleCloseCalc"/>
+    </children>
+</AnchorPane>

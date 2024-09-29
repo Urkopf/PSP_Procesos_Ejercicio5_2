@@ -1,4 +1,4 @@
-package psp_procesos_ejercicio5_2;
+package otroPrograma;
 
 import java.io.BufferedReader;
 import java.io.IOException;

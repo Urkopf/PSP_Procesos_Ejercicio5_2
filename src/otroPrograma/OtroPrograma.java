@@ -1,4 +1,4 @@
-package psp_procesos_ejercicio5_2;
+package otroPrograma;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 
 
-public class PSP_Procesos_Ejercicio5_2 extends Application {
+public class OtroPrograma extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
